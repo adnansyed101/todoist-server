@@ -25,3 +25,15 @@ export const createTask = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+export const getAllUserTask = async (req, res) => {
+  const { fireId } = req.query;
+
+  try {
+    const tasks = await Task.find({ fireId });
+    res.status(201).json(tasks);
+  } catch (err) {
+    console.log("Error in fetching task: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
