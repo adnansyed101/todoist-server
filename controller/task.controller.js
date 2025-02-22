@@ -33,6 +33,22 @@ export const getAllUserTask = async (req, res) => {
   }
 };
 
+export const getSingleTask = async (req, res) => {
+  const { taskId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(taskId)) {
+    return res.status(500).json({ success: false, message: "Invalid Task Id" });
+  }
+
+  try {
+    const tasks = await Task.findById(taskId);
+    res.status(201).json(tasks);
+  } catch (err) {
+    console.log("Error in fetching single task: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
 export const updateTaskStatus = async (req, res) => {
   const { taskId } = req.params;
   const { status } = req.body;
