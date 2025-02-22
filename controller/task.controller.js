@@ -4,13 +4,7 @@ import Task from "../models/task.model.js";
 export const createTask = async (req, res) => {
   const task = req.body;
 
-  if (
-    !task.title ||
-    !task.description ||
-    !task.status ||
-    !task.position ||
-    !task.fireId
-  ) {
+  if (!task.title || !task.description || !task.status || !task.fireId) {
     return res
       .status(400)
       .json({ success: false, message: "Please provide all fields" });
@@ -39,22 +33,25 @@ export const getAllUserTask = async (req, res) => {
   }
 };
 
-export const updateTask = async (req, res) => {
+export const updateTaskStatus = async (req, res) => {
   const { taskId } = req.params;
-  const { status, position } = req.body;
+  const { status } = req.body;
+
+
 
   if (!mongoose.Types.ObjectId.isValid(taskId)) {
     return res.status(500).json({ success: false, message: "Invalid Task Id" });
   }
 
   const updated = {
-    $set: { status, position },
+    $set: { status },
   };
 
   try {
     const updatedTask = await Task.findByIdAndUpdate(taskId, updated, {
       new: true,
     });
+   
     res.status(200).json(updatedTask);
   } catch (error) {
     console.log("Error in updating task: " + err.message);
