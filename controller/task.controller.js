@@ -37,8 +37,6 @@ export const updateTaskStatus = async (req, res) => {
   const { taskId } = req.params;
   const { status } = req.body;
 
-
-
   if (!mongoose.Types.ObjectId.isValid(taskId)) {
     return res.status(500).json({ success: false, message: "Invalid Task Id" });
   }
@@ -51,10 +49,26 @@ export const updateTaskStatus = async (req, res) => {
     const updatedTask = await Task.findByIdAndUpdate(taskId, updated, {
       new: true,
     });
-   
+
     res.status(200).json(updatedTask);
   } catch (error) {
     console.log("Error in updating task: " + err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export const deleteTask = async (req, res) => {
+  const { taskId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(taskId)) {
+    return res.status(500).json({ success: false, message: "Invalid Task Id" });
+  }
+
+  try {
+    const task = await Task.findByIdAndDelete(taskId);
+    res.status(200).json(task);
+  } catch (err) {
+    console.log("Error in deleting task: " + err.message);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
