@@ -17,10 +17,6 @@ const taskSchema = new mongoose.Schema(
       required: true,
       enum: ["To Do", "In Progress", "Done"],
     },
-    position: {
-      type: Number,
-      required: true,
-    },
     fireId: {
       type: String,
       required: true,
