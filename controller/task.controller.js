@@ -39,7 +39,7 @@ export const getAllUserTask = async (req, res) => {
   }
 };
 
-export const updateTaskPosition = async (req, res) => {
+export const updateTask = async (req, res) => {
   const { taskId } = req.params;
   const { status, position } = req.body;
 
