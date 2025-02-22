@@ -2,7 +2,7 @@ import express from "express";
 import {
   createTask,
   getAllUserTask,
-  updateTask,
+  updateTaskStatus,
 } from "../controller/task.controller.js";
 
 const router = express.Router();
@@ -11,7 +11,7 @@ const router = express.Router();
 router.get("/", getAllUserTask);
 
 // Update Task
-router.put("/:taskId", updateTask);
+router.patch("/:taskId", updateTaskStatus);
 
 // Create a Task
 router.post("/", createTask);
